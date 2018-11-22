@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" lang="es">
+<h:head>
+
+	<link
+		href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+		rel="stylesheet" id="bootstrap-css"></link>
+	<script
+		src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<title>inicio</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<h:graphicImage id="logo" url="imagenes/logo_federacion.PNG"
+			class="float-right col-md-2"></h:graphicImage>
+		<div class="jumbotron">
+			<h1>Hola, #{usu}</h1>
+			<p>Bienvenidos a la plataforma digital de UNIRED, aquí
+				encontrarás los servicios de la red.</p>
+			<form role="form">
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-lg">Catálogo
+						Bibliográfico</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Colabora</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Formación</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Divulgación</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Calendario</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Online</button>
+					<button href="#" type="submit" class="btn btn-primary btn-lg">Videoconferencia
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</h:body>
+</html>

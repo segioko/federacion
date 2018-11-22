@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesElResolver</el-resolver>
+	</application>
+	<managed-bean>
+		<managed-bean-name>controlUniversidad</managed-bean-name>
+		<managed-bean-class>control.ControlUniversidad</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>controlUsuario</managed-bean-name>
+		<managed-bean-class>control.ControlUsuario</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-class>model.Usuario</property-class>
+			<property-name>usuario</property-name>
+			<null-value />
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>controlServicio</managed-bean-name>
+		<managed-bean-class>control.ControlServicio</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>controlServicio_has_Universidad</managed-bean-name>
+		<managed-bean-class>control.ControlServicio_has_Universidad</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controlUsuario.loginUsuario}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/portada.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controlUsuario.loginUsuario}</from-action>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

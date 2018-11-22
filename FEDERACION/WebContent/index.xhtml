@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" lang="es">
+<h:head>
+
+	<link
+		href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+		rel="stylesheet" id="bootstrap-css"></link>
+	<script
+		src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>inicio de sesión</title>
+</h:head>
+<h:body id="LoginForm">
+	<div class="container">
+		<h1 class="form-heading col-md-8">Formulario de acceso</h1>
+		<h:graphicImage id="logo" url="imagenes/logo_federacion.PNG"
+			class="float-right col-md-2"></h:graphicImage>
+		<div class="login-form">
+			<div class="main-div">
+				<div class="panel">
+					<p>Porfavor ingrese su usuario y contraseña</p>
+				</div>
+				<h:form id="Login" method="loginUsuario">
+
+					<div class="form-group">
+						<input type="text" class="form-control col-md-4" id="estudiante"
+							placeholder="Usuario" name="estudiante"
+							value="#{controlUsuario.usuario.idUSUARIO}" />
+					</div>
+
+					<div class="form-group">
+						<input type="text" class="form-control col-md-4" id="universidad"
+							placeholder="Universidad" name="universidad"
+							value="#{controlUsuario.usuario.UNIVERSIDAD_idUNIVERSIDAD}" />
+					</div>
+
+					<div class="form-group">
+						<input type="password" class="form-control col-md-4"
+							id="inputPassword" placeholder="Constraseña" />
+					</div>
+
+					<div class="forgot">
+						<a href="#">¿Olvidaste tu contraseña?</a>
+					</div>
+
+					<h:commandButton type="submit" value="Iniciar
+						sesión"
+						class="btn btn-primary" action="#{controlUsuario.loginUsuario()}">
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
