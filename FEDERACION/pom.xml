@@ -115,6 +115,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifacId>spring-webflow</artifacId>
+			<version>2.5.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.25</version>
@@ -146,7 +152,7 @@
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
 			<version>2.1</version>
-		</dependency> 
+		</dependency>
 	</dependencies>
 
 	<properties>
