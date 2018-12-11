@@ -1,6 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+
+</head>
+<body>
+	<header>
+		<div class="container-fluid">
+			<div class="pull-left col-lg-1">
+				<img
+					src="https://drive.google.com/uc?export=view&id=1thTe--q9yn7KAee7WNx_rNA1mUQDYDR-"
+					class="pill-left" style="height: 100px; width: 100px;" />
+			</div>
+		</div>
+	</header>
+<!-- este es todo el codigo php para recoger datos, archivarlos en csv y agendar en Zoom -->
+<div style="display: none"> 
 <?php
 // se capturan los datos del formulario html
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/bogota');
+setlocale(LC_ALL,'es_ES');
 $fechaSolicitacion = date('Y-m-d H:i:s');
 $nombreEvento = $_POST["nombreEvento"];
 $Solicitante = $_POST["Solicitante"];
@@ -79,8 +109,9 @@ foreach($usuarios as $supuesto=>$evaluado){
             	 $id=$supuesto; 
 					         }
 				         }
-if($id==''){echo "ninguno" . '<br \>';
-$id='zQg-osoaTIu_OfrKPUZ2ow';}
+if($id==''){
+$id='zQg-osoaTIu_OfrKPUZ2ow';
+}
 $ch = curl_init(); //creacion de nuevo recurso cURL
 curl_setopt($ch, CURLOPT_URL, "https://api.zoom.us/v2/");//establece conexiòn
 curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -113,7 +144,7 @@ function getUsers () {
 }
 //print_r(getUsers());
 // el if define segun los datos si el evento es reunion o seminario web
-if($servicio=="Sala virtual de reuniones(hasta 100 participantes)"){
+if($servicio=="sala virtual de reuniones (hasta 100 participantes)"){
 $ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/meetings'); //se inicia la transacción, lo comprendido entre users/ y /meetings el el id de usuario
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . generateJWT(), "Content-Type: application/json") ); // se adjunta el token y se dise que tipo de dato se envia
 $d = array (
@@ -155,7 +186,7 @@ curl_close($ch);
 }
 $k;
 $v=1;
-if($servicio=="Sala virtual de reuniones(hasta 100 participantes)"){
+if($servicio=="sala virtual de reuniones (hasta 100 participantes)"){
   $ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/meetings');
 }else{
 $ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/webinars');
@@ -181,7 +212,36 @@ foreach($j as $supuesto){
 				                                 }
 					                           }
 			         }
-echo "value " . $v . "   key   " . $k;
-				  
+echo "value " . $v . "   key   " . $k;	
+$fechaEvento=date("d F Y", strtotime($fechaEvento));  
 ?>
+</div>
 
+
+<main role="main" class="container">
+      <div class="jumbotron">
+        <h1>Programación de <?php echo $servicio?></h1>
+        <p class="lead"><?php echo $Solicitante;?> está apunto de completar la programación de <?php echo $nombreEvento;?>, organizado por la <?php echo $organiza;?>, el dia <?php echo date("d F Y", strtotime($fechaEvento));?>, a las <?php echo date("g:i  a", strtotime($horaInicio));?> y termina a las <?php echo date("g:i  a", strtotime($horaFin));?></p>
+<p class=lead">Se enviará la información detallada de la reserva al correo<?php echo $emailSolicitante;?> y se programara automáticamente en su calendar.<?php echo $difusio;?></p>
+
+<p class="lead">si el correo registrado no es de gmail por favor copie el siguiente enlace de la sala Zoom para su reunión <?php  echo $v ?></p>
+        <a class="btn btn-lg btn-primary" href="https://getbootstrap.com/docs/4.1/components/navbar/" role="button">Caledar</a>
+      </div>
+    </main>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
+
+</body>
+</html>
