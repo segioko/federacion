@@ -28,17 +28,20 @@ $minutos = $minutos*(-1); // encaso de que la diferencia de minutos fueran negat
 }
 $duracion = ($finhora - $iniciohora)*60 + $minutos;
 $iniciohora = $iniciohora + 5; // segun GTM nosotros tenemos 5 horas de retraso, zoom exigue hora GTM por lo cual con esta operación se estandariza a la hora internacional.
-$horazoom = $fechaEvento . " " .  $iniciohora . ":" . $iniciominutos; // se compila la hora de inicio con los minutos
-$horazoom = strtotime($horazoom); // se combierte la variable String a time 
-$horazoom = gmdate("Y M d H:i:s T", $horazoom); //se define el formato de la hora exigido por Zoom
+if($iniciominutos=="0"){$iniciominutos="00";}
+$horazoom = $fechaEvento . "T" .  $iniciohora . ":" . $iniciominutos . ":00Z"; // se compila la hora de inicio con los minutos 
+$horaZOOM = $fechaEvento . "T" .  $iniciohora . ":" . $iniciominutos . ":00Z"; 
+$horazoom = strtotime($horazoom); // se combierte la variable String a time
+$horazoom = gmdate("Y-m-d H:i:s", $horazoom); //se define el formato de la hora exigido por Zoom
 $fechaSolicitacion = strtotime($fechaSolicitacion); // se convierte String en tipo date 
-$fechaSolicitacion = gmdate("Y M d H:i:s T", $fechaSolicitacion); //se define el formato de fecha exigido por Zoom
+$fechaSolicitacion = gmdate("Y m d T H:i:s Z", $fechaSolicitacion); //se define el formato de fecha exigido por Zoom
 // el siguiente if verifica si la fecha de solicitación no sea despues de la fecha del evento
-if($horazoom > $fechaSolicitacion){   
+if($horazoom > $fechaSolicitacion){  
 echo "la fecha es valida y se puede agendar";
 }else {
 echo "la fecha no es valida";
 }
+echo '<br \>';
 // ******************************** envio de datos al csv
 $csv_line = array($fechaSolicitacion, $nombreEvento, $Solicitante, $emailSolicitante, $servicio, $fechaEvento, $horazoom, $duracion, $organiza, $nombreResponsable, $cargo, $telefono, $celular, $responsableTecnico, $emailTecnico, $difusion); 
 $path = 'reunioneszoom.csv';
@@ -72,12 +75,12 @@ $usuarios = array(
 	        'R3NnciPYQbak3BsmNZ18zg' => 'yudy.florez@ustabuca.edu.co');
 $id= '';
 foreach($usuarios as $supuesto=>$evaluado){
-echo $supuesto . '<br \>';
 		 if($evaluado==$emailSolicitante){
             	 $id=$supuesto; 
 					         }
 				         }
-
+if($id==''){echo "ninguno" . '<br \>';
+$id='zQg-osoaTIu_OfrKPUZ2ow';}
 $ch = curl_init(); //creacion de nuevo recurso cURL
 curl_setopt($ch, CURLOPT_URL, "https://api.zoom.us/v2/");//establece conexiòn
 curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -116,7 +119,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . generateJW
 $d = array (
     "topic" => $nombreEvento,
     "type" => "2",
-    "start_time" => $horazoom,
+    "start_time" => $horaZOOM,
     "timezone" => "America/Bogota",
     "duration" => "" . $duracion,
     "settings" => array("auto_recording" => "local")
@@ -129,6 +132,9 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $d);
 curl_exec($ch);// captura la url y la envia al navegador
 curl_close($ch);//cierra el recurso cURL
 } else{ 
+if($id=='zQg-osoaTIu_OfrKPUZ2ow'){
+$id='bFLhGGrTQ6CGCbPIC3NDsQ';
+				 }
 $ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/webinars');
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . generateJWT(), "Content-Type: application/json") );
 $d = array (
@@ -147,5 +153,35 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $d);
 curl_exec($ch);
 curl_close($ch);
 }
+$k;
+$v=1;
+if($servicio=="Sala virtual de reuniones(hasta 100 participantes)"){
+  $ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/meetings');
+}else{
+$ch = curl_init('https://api.zoom.us/v2/users/' . $id . '/webinars');
+     }
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . generateJWT()) );
+$j=curl_exec($ch);
+curl_close($ch);
+$j=json_decode($j, true);
+foreach($j as $supuesto){
+	 		foreach($supuesto as $reunion){
+				foreach($reunion as $key=>$value){
+     if("topic"==$key){
+		if($value==$nombreEvento){
+                                   $v=0;
+ 					 }
+                      }
+     if("join_url"==$key){
+                if($v==0){
+                    $v=$value;
+ 					 } 
+                         }
+				                                 }
+					                           }
+			         }
+echo "value " . $v . "   key   " . $k;
+				  
 ?>
 
