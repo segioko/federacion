@@ -62,8 +62,7 @@ if($iniciominutos=="0"){$iniciominutos="00";}
 $horazoom = $fechaEvento . "T" .  $iniciohora . ":" . $iniciominutos . ":00Z"; // se compila la hora de inicio con los minutos 
 $horaZOOM = $fechaEvento . "T" .  $iniciohora . ":" . $iniciominutos . ":00Z"; 
 $horazoom = strtotime($horazoom); // se combierte la variable String a time
-$horazoom = gmdate("Y-m-d H:i:s", $horazoom); //se define el formato de la h
-ora exigido por Zoom
+$horazoom = gmdate("Y-m-d H:i:s", $horazoom); //se define el formato de la hora exigido por Zoom
 $fechaSolicitacion = strtotime($fechaSolicitacion); // se convierte String en tipo date 
 $fechaSolicitacion = gmdate("Y m d T H:i:s Z", $fechaSolicitacion); //se define el formato de fecha exigido por Zoom
 // el siguiente if verifica si la fecha de solicitación no sea despues de la fecha del evento
